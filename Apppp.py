@@ -34,17 +34,11 @@ def main():
 
 
     # ---------------- API KEY ----------------
-    filepath = os.getcwd()
+    openai_api_key = os.getenv("OPENAI_API_KEY")
 
-    try:
-        with open(os.path.join(filepath, "OpenAI_API_Key.txt"), "r") as f:
-            openai_api_key = f.read().strip()
-
-        os.environ["OPENAI_API_KEY"] = openai_api_key
-
-    except FileNotFoundError:
-        st.error("Please ensure OpenAI_API_Key.txt exists.")
-        return
+    if not openai_api_key:
+       st.error("API key not found. Please add it in Streamlit Secrets.")
+       st.stop()
 
 
     # ---------------- CHAT MEMORY ----------------
